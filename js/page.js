@@ -69,12 +69,12 @@ function finishMove() {
 
 // 事件
 var pageContainer = $('.page_container');
+function hanhler_box() {
+    
+}
 // touchstart手指按下事件
 pageContainer.addEventListener('touchstart',function(e) {
-    
-    
     var y = e.touches[0].clientY;
-
     function handler (e) {
         var dis = e.touches[0].clientY - y;
         if (Math.abs(dis) < 20 ) {  //防止误触
@@ -87,15 +87,24 @@ pageContainer.addEventListener('touchstart',function(e) {
         }
     }
     // 手指按下，监听移动
-    pageContainer.addEventListener('touchmove',handler,
-    {
-        passive: false,
-    }
-    );
+    pageContainer.addEventListener("touchmove", handler, {
+      passive: false,
+    });
 },false);
     
 // 手指松开，结束移动
 pageContainer.addEventListener('touchend',function(){
+    function handler (e) {
+        var dis = e.touches[0].clientY - y;
+        if (Math.abs(dis) < 20 ) {  //防止误触
+            dis = 0; //相当于手指没动
+        }
+        moving(dis);
+        // 阻止事件的默认行为
+        if (e.cancelable) { //如果事件可以取消
+            e.preventDefault() ;//取消事件，阻止默认行为
+        }
+    }
     finishMove();
     pageContainer.removeEventListener('touchmove',handler);
 },false);
